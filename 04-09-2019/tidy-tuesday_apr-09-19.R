@@ -1,21 +1,27 @@
-library(tidyverse)
+# Import data
 
+library(tidyverse)
 grand_slams <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-09/grand_slams.csv")
 
-grand_slams$grand_slam <- str_replace(grand_slams$grand_slam, '_', ' ') %>%
+# Fix grand_slam strings, needed for facet strip text
+# (didn't pipe nicely, so needs to be put up front)
+grand_slams$grand_slam <- str_replace(grand_slams$grand_slam, '_', ' ') %>% 
     str_to_title() %>%
     str_replace('Us', 'US') 
 
-library(wesanderson)
-library(extrafont)
-library(ggrepel)
-grand_slams %>% 
+# Prep data for plot
+grand_slams <- grand_slams %>% 
     group_by(name, gender) %>% 
     mutate(wins_all = n()) %>%
     group_by(name, gender, grand_slam, wins_all) %>% 
     summarize(wins_per_gs = n()) %>% 
     group_by(grand_slam) %>% 
-    top_n(10, wt = wins_all) %>% 
+    top_n(10, wt = wins_all)
+
+# Plot
+library(wesanderson)
+library(extrafont)
+grand_slams %>% 
     ggplot(aes(x = reorder(name, wins_all), y = wins_per_gs, fill = grand_slam)) +
     geom_bar(stat = 'identity', position = 'dodge') +
     scale_fill_manual(values = wes_palette("Chevalier1")) +
@@ -23,7 +29,7 @@ grand_slams %>%
     labs(y = 'Championship Titles',
          title = 'Grand Slam Singles Championships',
          subtitle = 'Top 10 players, by total Grand Slam Wins (1968 - Present)',
-         caption = 'Chart: @SamProhaska\nData Source: Wikipedia') +
+         caption = 'Chart: @SamProhaska\nData Source: Wikipedia')
     theme(
         plot.background = element_rect(fill = '#fbf8f4'),
         text = element_text(family = 'Raleway', color = '#34495e'),
@@ -44,4 +50,3 @@ grand_slams %>%
                labeller = labeller(gs_names)) +
     theme(strip.text.x = element_text(color = "#34495e"),
           strip.background = element_rect(fill="#fbf8f4"))
-ggsave('04-09-2019/tennis.png', width = 8, height = 5)
