@@ -29,7 +29,7 @@ grand_slams %>%
     labs(y = 'Championship Titles',
          title = 'Grand Slam Singles Championships',
          subtitle = 'Top 10 players, by total Grand Slam Wins (1968 - Present)',
-         caption = 'Chart: @SamProhaska\nData Source: Wikipedia')
+         caption = 'Chart: @SamProhaska\nData Source: Wikipedia') +
     theme(
         plot.background = element_rect(fill = '#fbf8f4'),
         text = element_text(family = 'Raleway', color = '#34495e'),
@@ -50,3 +50,4 @@ grand_slams %>%
                labeller = labeller(gs_names)) +
     theme(strip.text.x = element_text(color = "#34495e"),
           strip.background = element_rect(fill="#fbf8f4"))
+    
