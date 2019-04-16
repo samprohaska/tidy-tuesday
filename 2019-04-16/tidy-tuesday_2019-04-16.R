@@ -16,7 +16,7 @@ women_research %>%
   plot_ly(x = ~percent_women * 100, y = ~field, color = ~country, type = 'bar') %>%
   layout(title = 'Share of published women researchers, by field (2011-2015)',
          barmode = 'group',
-         xaxis = list(title = 'Women, as % of total published authors',
+         xaxis = list(title = "Women's representation in academic publishing (2011-2015)",
                       ticksuffix = "%",
                       range = c(0,100)),
          yaxis = list(title = ''),
@@ -29,11 +29,11 @@ women_research %>%
            showarrow = FALSE
          ))
 
-# Plot 2: Grouped by field
+# Plot 2: Grouped by country
 
 women_research %>%
   plot_ly(x = ~percent_women * 100, y = ~country, color = ~field, type = 'bar') %>%
-  layout(title = 'Share of published women researchers, by field (2011-2015)',
+  layout(title = "Women's representation in academic publishing (2011-2015)",
          barmode = 'group',
          xaxis = list(title = 'Women, as % of total published authors',
                       ticksuffix = "%",
