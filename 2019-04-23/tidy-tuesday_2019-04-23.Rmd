@@ -35,7 +35,7 @@ gg <- df_anime %>%
     theme(
         plot.background = element_rect(fill = '#fbf8f4'),
         text = element_text(family = 'Raleway', color = '#34495e'),
-        axis.title.x = element_text(color = '#34495e', size = 18),
+        axis.title.x = element_text(color = '#34495e', size = 18, face = 'bold'),
         axis.ticks.y = element_line(color = '#34495e', size = 0.2),
         axis.line.y = element_line(color = '#34495e', size = 0.5),
         axis.text = element_text(color = '#34495e', size = 16),
@@ -43,9 +43,9 @@ gg <- df_anime %>%
         axis.line.x = element_line(color = '#34495e', size = 0.5),
         legend.position = "none",
         panel.grid.major.y = element_line(color = '#34495e', size = 0.2),
-        axis.title.y = element_text(color = '#34495e', size = 18),
-        plot.title = element_text(hjust = 0, color = '#34495e', face = 'bold', size = 26),
-        plot.subtitle = element_text(hjust = 0, color = '#34495e', size = 22),
+        axis.title.y = element_text(color = '#34495e', size = 18, face = 'bold'),
+        plot.title = element_text(hjust = 0, color = '#34495e', face = 'bold', size = 32),
+        plot.subtitle = element_text(hjust = 0, color = '#34495e', size = 26),
         plot.caption = element_text(color = '#34495e', size = 16, face = 'italic')
     ) +
     scale_y_log10() +
@@ -53,7 +53,7 @@ gg <- df_anime %>%
     facet_rep_wrap(~ type) +
     labs(title = 'Quantity & Quality', subtitle = 'MyAnimeList Ranking Frequency vs. Avg Score, by medium') +
     theme(
-        strip.text.x = element_text(color = "#34495e", size = 16, face = 'bold'),
+        strip.text.x = element_text(color = "#34495e", size = 22, face = 'bold'),
         strip.background = element_rect(fill = NA, colour = '#34495e')) +
     transition_reveal(start_date) +
     labs(caption = 'Released by: {frame_along}', x = 'Average Score',y = 'Number of Rankers (log)' ) +
