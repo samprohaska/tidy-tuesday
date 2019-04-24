@@ -1,0 +1,64 @@
+---
+title: "Tidy Tuesday 2019-04-23"
+output: html_notebook
+---
+
+Data import and setup:
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+library(lubridate)
+library(gganimate)
+library(gifski)
+library(extrafont)
+library(lemon)
+
+tidy_anime <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-23/tidy_anime.csv")
+
+df_anime <- tidy_anime %>% distinct(animeID, .keep_all = TRUE)
+
+df_anime <- df_anime %>% 
+    filter(type != 'Unknown') %>%
+    select(name, type, score, scored_by, start_date) %>% 
+    mutate(year = year(start_date)) %>% 
+    arrange(-year) %>% 
+    na.omit()
+```
+
+Plotting with gganimate:
+
+```{r}
+gg <- df_anime %>% 
+    ggplot(aes(x = score, y = scored_by, color = type, group = type)) +
+    geom_point(size = 0.4, alpha = 0.5, aes(group = seq_along(start_date))) +
+    theme(
+        plot.background = element_rect(fill = '#fbf8f4'),
+        text = element_text(family = 'Raleway', color = '#34495e'),
+        axis.title.x = element_text(color = '#34495e', size = 18),
+        axis.ticks.y = element_line(color = '#34495e', size = 0.2),
+        axis.line.y = element_line(color = '#34495e', size = 0.5),
+        axis.text = element_text(color = '#34495e', size = 16),
+        axis.ticks.x = element_line(color = '#34495e', size = 0.5),
+        axis.line.x = element_line(color = '#34495e', size = 0.5),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = '#34495e', size = 0.2),
+        axis.title.y = element_text(color = '#34495e', size = 18),
+        plot.title = element_text(hjust = 0, color = '#34495e', face = 'bold', size = 26),
+        plot.subtitle = element_text(hjust = 0, color = '#34495e', size = 22),
+        plot.caption = element_text(color = '#34495e', size = 16, face = 'italic')
+    ) +
+    scale_y_log10() +
+    scale_color_manual(values = economist_pal()(7)) +
+    facet_rep_wrap(~ type) +
+    labs(title = 'Quantity & Quality', subtitle = 'MyAnimeList Ranking Frequency vs. Avg Score, by medium') +
+    theme(
+        strip.text.x = element_text(color = "#34495e", size = 16, face = 'bold'),
+        strip.background = element_rect(fill = NA, colour = '#34495e')) +
+    transition_reveal(start_date) +
+    labs(caption = 'Released by: {frame_along}', x = 'Average Score',y = 'Number of Rankers (log)' ) +
+    enter_fade()
+
+animate(gg, height = 720, width = 1280, nframes = 110, end_pause = 5)
+anim_save('mal_tidy-tuesday.gif')
+```
