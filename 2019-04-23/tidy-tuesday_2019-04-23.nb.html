@@ -1770,7 +1770,7 @@ $(document).ready(function () {
 <p>Data import and setup:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGdndGhlbWVzKVxubGlicmFyeShsdWJyaWRhdGUpXG5saWJyYXJ5KGdnYW5pbWF0ZSlcbmxpYnJhcnkoZ2lmc2tpKVxubGlicmFyeShleHRyYWZvbnQpXG5saWJyYXJ5KGxlbW9uKVxuXG50aWR5X2FuaW1lIDwtIHJlYWRfY3N2KFwiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3Jmb3JkYXRhc2NpZW5jZS90aWR5dHVlc2RheS9tYXN0ZXIvZGF0YS8yMDE5LzIwMTktMDQtMjMvdGlkeV9hbmltZS5jc3ZcIilcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGdndGhlbWVzKVxubGlicmFyeShsdWJyaWRhdGUpXG5saWJyYXJ5KGdnYW5pbWF0ZSlcbmxpYnJhcnkoZ2lmc2tpKVxubGlicmFyeShleHRyYWZvbnQpXG5saWJyYXJ5KGxlbW9uKVxuXG50aWR5X2FuaW1lIDwtIHJlYWRfY3N2KFwiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3Jmb3JkYXRhc2NpZW5jZS90aWR5dHVlc2RheS9tYXN0ZXIvZGF0YS8yMDE5LzIwMTktMDQtMjMvdGlkeV9hbmltZS5jc3ZcIilcblxuZGZfYW5pbWUgPC0gdGlkeV9hbmltZSAlPiUgZGlzdGluY3QoYW5pbWVJRCwgLmtlZXBfYWxsID0gVFJVRSlcblxuZGZfYW5pbWUgPC0gZGZfYW5pbWUgJT4lIFxuICAgIGZpbHRlcih0eXBlICE9ICdVbmtub3duJykgJT4lXG4gICAgc2VsZWN0KG5hbWUsIHR5cGUsIHNjb3JlLCBzY29yZWRfYnksIHN0YXJ0X2RhdGUpICU+JSBcbiAgICBtdXRhdGUoeWVhciA9IHllYXIoc3RhcnRfZGF0ZSkpICU+JSBcbiAgICBhcnJhbmdlKC15ZWFyKSAlPiUgXG4gICAgbmEub21pdCgpXG5gYGAifQ== -->
 <pre class="r"><code>library(tidyverse)
 library(ggthemes)
 library(lubridate)
@@ -1779,28 +1779,9 @@ library(gifski)
 library(extrafont)
 library(lemon)
 
-tidy_anime &lt;- read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-23/tidy_anime.csv&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICAuZGVmYXVsdCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgYW5pbWVJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBlcGlzb2RlcyA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBhaXJpbmcgPSBcdTAwMWJbMzNtY29sX2xvZ2ljYWwoKVx1MDAxYlszOW0sXG4gIHN0YXJ0X2RhdGUgPSBcdTAwMWJbMzRtY29sX2RhdGUoZm9ybWF0ID0gXCJcIilcdTAwMWJbMzltLFxuICBlbmRfZGF0ZSA9IFx1MDAxYlszNG1jb2xfZGF0ZShmb3JtYXQgPSBcIlwiKVx1MDAxYlszOW0sXG4gIHNjb3JlID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHNjb3JlZF9ieSA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICByYW5rID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHBvcHVsYXJpdHkgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbWVtYmVycyA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBmYXZvcml0ZXMgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bVxuKVxuU2VlIHNwZWMoLi4uKSBmb3IgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbnMuXG4ifQ== -->
-<pre><code>Parsed with column specification:
-cols(
-  .default = col_character(),
-  animeID = [32mcol_double()[39m,
-  episodes = [32mcol_double()[39m,
-  airing = [33mcol_logical()[39m,
-  start_date = [34mcol_date(format = &quot;&quot;)[39m,
-  end_date = [34mcol_date(format = &quot;&quot;)[39m,
-  score = [32mcol_double()[39m,
-  scored_by = [32mcol_double()[39m,
-  rank = [32mcol_double()[39m,
-  popularity = [32mcol_double()[39m,
-  members = [32mcol_double()[39m,
-  favorites = [32mcol_double()[39m
-)
-See spec(...) for full column specifications.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGZfYW5pbWUgPC0gdGlkeV9hbmltZSAlPiUgZGlzdGluY3QoYW5pbWVJRCwgLmtlZXBfYWxsID0gVFJVRSlcblxuZGZfYW5pbWUgPC0gZGZfYW5pbWUgJT4lIFxuICAgIGZpbHRlcih0eXBlICE9ICdVbmtub3duJykgJT4lXG4gICAgc2VsZWN0KG5hbWUsIHR5cGUsIHNjb3JlLCBzY29yZWRfYnksIHN0YXJ0X2RhdGUpICU+JSBcbiAgICBtdXRhdGUoeWVhciA9IHllYXIoc3RhcnRfZGF0ZSkpICU+JSBcbiAgICBhcnJhbmdlKC15ZWFyKSAlPiUgXG4gICAgbmEub21pdCgpXG5gYGAifQ== -->
-<pre class="r"><code>df_anime &lt;- tidy_anime %&gt;% distinct(animeID, .keep_all = TRUE)
+tidy_anime &lt;- read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-23/tidy_anime.csv&quot;)
+
+df_anime &lt;- tidy_anime %&gt;% distinct(animeID, .keep_all = TRUE)
 
 df_anime &lt;- df_anime %&gt;% 
     filter(type != &#39;Unknown&#39;) %&gt;%
