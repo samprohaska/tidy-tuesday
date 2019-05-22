@@ -1,0 +1,41 @@
+---
+title: "Tidy tuesday 2019-04-30"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+
+bird_collisions <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-30/bird_collisions.csv")
+
+mp_light <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-30/mp_light.csv")
+```
+
+```{r}
+library(lubridate)
+library(ggTimeSeries)
+weeks <- tibble(week = seq(1, 52))
+
+bird_collisions %>% 
+    mutate(week = week(date),
+           stratum = factor(stratum)) %>% 
+    group_by(week, stratum) %>% 
+    summarize(freq = n()) %>% 
+    full_join(weeks, by = 'week') %>% 
+    complete(week, stratum, fill = list(freq = 0)) %>% 
+    arrange(week) %>% 
+    filter(is.na(stratum) == FALSE)
+
+df <- bird_collisions %>%
+    mutate(stratum = factor(stratum)) %>% 
+    group_by(date, stratum) %>% 
+    summarize(freq = n()) 
+
+df %>% 
+  ggplot(aes(x = date, y = freq, fill = stratum)) +
+  stat_steamgraph() +
+    labs(y = 'Weekly Average') +
+    theme_classic()
+```
+
+

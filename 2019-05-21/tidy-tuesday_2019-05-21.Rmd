@@ -1,0 +1,45 @@
+---
+title: "Tidy Tuesday: Plastic Waste"
+author: "Samuel Prohaska"
+date: "5/21/2019"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(readr)
+library(janitor)
+
+coast_vs_waste <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-21/coastal-population-vs-mismanaged-plastic.csv")
+
+mismanaged_vs_gdp <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-21/per-capita-mismanaged-plastic-waste-vs-gdp-per-capita.csv")
+
+waste_vs_gdp <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-21/per-capita-plastic-waste-vs-gdp-per-capita.csv")
+
+dat <- list(coast_vs_waste, mismanaged_vs_gdp, waste_vs_gdp)
+dat <- lapply(dat, clean_names)
+```
+
+
+```{r}
+mismanaged <- dat[[2]]
+mismanaged <- rename(mismanaged, plastic_waste_misman =  'per_capita_mismanaged_plastic_waste_kilograms_per_person_per_day')
+
+waste <- dat[[3]]
+waste <- rename(waste,  plastic_waste =  'per_capita_plastic_waste_kilograms_per_person_per_day')
+
+df <- mismanaged %>% select(code, year, plastic_waste_misman) %>% 
+    left_join(waste, by = c('code', 'year'))
+
+df <- rename(df, gdppc =  'gdp_per_capita_ppp_constant_2011_international_constant_2011_international')
+```
+
+```{r}
+df %>%
+    filter(year == 2010, is.na(plastic_waste_misman) == FALSE) %>% 
+    ggplot(aes(x = gdppc, y = (plastic_waste_misman / plastic_waste) * 100)) +
+    geom_point() +
+    scale_x_log10() +
+    theme_classic() +
+    expand_limits(x = 0, y = c(0,100))
+```
