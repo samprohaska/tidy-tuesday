@@ -5,6 +5,8 @@ date: "5/21/2019"
 output: html_document
 ---
 
+First, import the data and clean up the column names.
+
 ```{r}
 library(tidyverse)
 library(readr)
@@ -20,22 +22,25 @@ waste_vs_gdp <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidy
 
 dat <- list(coast_vs_waste, mismanaged_vs_gdp, waste_vs_gdp)
 dat <- lapply(dat, clean_names)
-```
 
-
-```{r}
 mismanaged <- dat[[2]]
 mismanaged <- rename(mismanaged, plastic_waste_misman = "per_capita_mismanaged_plastic_waste_kilograms_per_person_per_day")
 
 waste <- dat[[3]]
 waste <- rename(waste, plastic_waste = "per_capita_plastic_waste_kilograms_per_person_per_day")
+```
 
+Now that the data's easier to work with, join the 'mismanaged' and 'waste' data. This is necessary in order to find the proportion of plastic mismanaged.
+
+```{r}
 df <- mismanaged %>%
   select(code, year, plastic_waste_misman) %>%
   left_join(waste, by = c("code", "year"))
 
 df <- rename(df, gdppc = "gdp_per_capita_ppp_constant_2011_international_constant_2011_international")
 ```
+
+From there, set up the theme (done in advance as it's rather lengthy), slightly filter, data and create the plot.
 
 ```{r}
 my_theme <- theme_classic() +
@@ -56,6 +61,10 @@ my_theme <- theme_classic() +
     legend.background = element_rect(fill = NA)
   )
 
+# ggplot takes care of most of this filtering anyway
+# (non-2010 values should be NA), but I wanted to be sure.
+# `plastic_waste <1` was added to remove Trinidad and Tobago's
+# whopping 3.6 tonnes per capita, as it threw off the scale.
 df_plot <- df %>%
   filter(year == 2010, is.na(plastic_waste_misman) == FALSE, plastic_waste < 1)
 
